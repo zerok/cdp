@@ -1,0 +1,14 @@
+#compdef cdp
+local -a arguments
+
+if [ ! -z $PROJECT_DIRECTORIES ]; then
+    for dir in ${(s/:/)PROJECT_DIRECTORIES}; do
+        for proj in $(ls $dir); do
+            if [ -d $dir/$proj ]; then
+                arguments+=($proj:$dir)
+            fi
+        done
+    done
+fi
+
+_describe 'values' arguments
