@@ -2,16 +2,16 @@
 cdp() {
     local project=$1
 
-    if [ -z $PROJECT_DIRECTORIES ]; then
+    if [ -z "$PROJECT_DIRECTORIES" ]; then
         print "You have to set up your \$PROJECT_DIRECTORIES variable"
         return 2
     fi
 
     for dir in ${(s/:/)PROJECT_DIRECTORIES}; do
-        for proj in $(ls $dir); do
-            if [ -d $dir/$proj ] && [ "$proj" = "$project" ]; then
+        for proj in "$dir"/* ; do
+            if [ -d "$proj" ] && [ "$proj:t" = "$project" ]; then
                 print "Found $project in $dir"
-                cd $dir/$proj
+                cd "$proj" || return 1
                 return
             fi
         done
